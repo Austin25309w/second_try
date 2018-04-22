@@ -8,23 +8,27 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 class userManager(models.Manager):
 	def reg_validator(self, postData):
 		errors ={}
+		serverEmail = User.objects.filter(email = postData['reg_email'])
 		if len(postData['first_name']) < 4:
 			errors['name'] = "First Name should be at least 4 characters"
 
-		if len(postData['last_name']) < 2:
+		elif len(postData['last_name']) < 2:
 			errors['last_name'] = "Last Name should be at least 2 characters"
 
-		if len(postData['reg_email']) < 1:
+		elif len(postData['reg_email']) < 1:
 			errors['email'] = "please enter email"
 
-		if postData['password'] != postData['con_pass']:
+		elif postData['password'] != postData['con_pass']:
 			errors['con_pass'] = "Please confirm your password"
 
-		if len(postData['password']) < 8:
+		elif len(postData['password']) < 8:
 			errors['pw'] = "please enter more than 8 characters for your password"
 
-		if not EMAIL_REGEX.match(postData['reg_email']):
+		elif not EMAIL_REGEX.match(postData['reg_email']):
 			errors['reg_email'] = "Please enter a valid email"
+
+		elif len(serverEmail):
+			errors['serverEmail'] = "email has already existed!"
 
 		return errors 
 
