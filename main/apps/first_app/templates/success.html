@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>success page</title>
+	<style type="text/css">
+		*{
+			margin: 30px;
+		}
+		h4{
+			color: green;
+		}
+		h4, h1 {
+			font-family: fantasy;
+		}
+	</style>
+</head>
+<body>
+	<form action="/success" method="post">
+		{% csrf_token %}
+		<h4>You've been successfully registered</h4>
+		<h1>Welcome, you've been logged in, {{ first }}</h1>
+		
+	</form>
+		<a href="/"><button>Logout</button></a>
+</body>
+</html>
