@@ -9,11 +9,11 @@ class userManager(models.Manager):
 	def reg_validator(self, postData):
 		errors ={}
 		serverEmail = User.objects.filter(email = postData['reg_email'])
-		if len(postData['first_name']) < 4:
-			errors['name'] = "First Name should be at least 4 characters"
+		if len(postData['name']) < 4:
+			errors['name'] = "Name should be at least 4 characters"
 
-		elif len(postData['last_name']) < 2:
-			errors['last_name'] = "Last Name should be at least 2 characters"
+		elif len(postData['alias']) < 2:
+			errors['alias'] = "alias should be at least 2 characters"
 
 		elif len(postData['reg_email']) < 1:
 			errors['email'] = "please enter email"
@@ -44,11 +44,27 @@ class userManager(models.Manager):
 			errors['match'] = "invalid email and password" 
 		return errors
 
+	def quote_validator(self,postData):
+		errors = {}
+		if len(postData['quote_name']) < 3:
+			errors['quoten'] ="please enter more than 3 characters"
+		if len(postData['quote_message']) < 10:
+			errors['quotem'] = "pelase enter more than 10 characters for your message"	
+		return errors
+
+
 class User(models.Model):
-	first_name =models.CharField(max_length = 255)
-	last_name = models.CharField(max_length = 255)
+	name =models.CharField(max_length = 255)
+	alias = models.CharField(max_length = 255)
 	email =	models.CharField(max_length = 255)
 	password = models.CharField(max_length = 255)	
 	created_at = models.DateTimeField(auto_now_add = True)
+	objects = userManager()
 
+class Quote(models.Model):
+	name = models.CharField(max_length = 255)
+	desc = models.CharField(max_length = 255)
+	creator = models.ForeignKey(User, related_name = "created_items")
+	liked_users = models.ManyToManyField(User, related_name="liked_items")
+	created_at = models.DateTimeField(auto_now_add=True)
 	objects = userManager()

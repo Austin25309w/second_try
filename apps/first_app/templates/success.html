@@ -9,18 +9,69 @@
 		h4{
 			color: green;
 		}
-		h4, h1 {
+		h4, h3, h1 {
 			font-family: fantasy;
+		}
+		.my {
+			border:1px solid red;
+		}
+		.their {
+			border:1px solid blue;
 		}
 	</style>
 </head>
 <body>
 	<form action="/success" method="post">
 		{% csrf_token %}
-		<h4>You've been successfully registered</h4>
-		<h1>Welcome, you've been logged in, {{ request.session.first_name }}</h1>
+		<h1>Welcome,{{ request.session.name }}</h1>
+		<a href="/logout">Logout</a>
+
+		<p>Quotable quotes</p>
+		</form>
+		<!-- other's quote -->
+		{% for x in other_items %}	
+		<div class="their">
 		
-	</form>
-		<a href="/logout"><button>Logout</button></a>
+			<div>
+				<p> {{ x.desc }}</p>
+				<p>Posted by:<a href="/show/{{x.id}}">{{ x.creator.name}}</a></p>
+				<a href="/addItem/{{x.id}}">Add to my list</a>
+			</div>
+	
+		</div>
+		{% endfor %}	
+
+		<h3>Your favorite quote</h3>
+		<!-- user's quote -->
+		{% for x in my_items %}	
+		<div class="my">
+		
+			<div>
+				<p> {{ x.desc }}</p>
+				<p>Posted by<a href="/show/{{ x.id }}">{{ x.name}}</a></p>
+				<a href="/removeItem/{{x.id}}">Remove From my list</a>
+			</div>
+		
+		</div>
+		{% endfor %}	
+	
+
+	<h3>Contribute a Quote</h3>
+	<p>Quoted by</p>
+	<form action="/create" method="post">
+		{% csrf_token %}
+	
+	<input type="text" name="quote_name">
+	<p>Message</p>
+	<input type="text" name="quote_message">
+	<input type="submit" name="submit">
+	</form>	
+	{% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li style="color: red;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    	{% endif %}
 </body>
 </html>
