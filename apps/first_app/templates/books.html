@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>books</title>
+	<style type="text/css">
+	#wrapper{
+		width: 500px;
+		height: 300px;
+	}
+	div.scroll {
+    	background-color: lightblue;
+   		width: 210px;
+    	height: 150px;
+    	overflow: scroll;
+	nav {
+		display: block;
+	}
+	.column {
+		display: block;
+		width: 200px
+		height:400px;
+		vertical-align: top;
+	}
+	.column1 {
+		text-align: right;
+	}
+	* {
+	margin: 10px;
+}
+h1, h2, h4{
+	font-family: fantasy;
+}
+
+}
+
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+	<nav>
+		<h1>Welcome, {{ request.session.first_name}}</h1>
+		<div class="column">
+			<a href="/">Add Book and Review</a>
+			<a href="/">Logout</a>
+		</div>
+	</nav>
+	
+	<div>
+		<h2>Recent Book Reviews</h2>
+
+	</div>
+	<div class="column1">
+		<h2>Other Books with Reviews</h2>
+		<div class="scroll"></div>
+	</div>
+	</div>
+
+</body>
+</html>
