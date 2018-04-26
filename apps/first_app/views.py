@@ -87,10 +87,10 @@ def removeItem(request, id):
 
 
 def show(request, id):
-	show = Quote.objects.get(id=id)
+	the_user = User.objects.get(id=id)
 	user = {
-		"name" : show.name,
-		"desc" : show.desc
+		"name" : the_user.name,
+		"desc" : the_user.liked_items.all().name
 	}
 	return render(request, "show.html", user)
 
