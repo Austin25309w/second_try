@@ -35,21 +35,21 @@
 
 	
 	<h1>Posted by: {{name}}</h1>
-	<h3>Count: {{ count }}</h3>
+	
 
 
 
 
+	<ul>
 
 
-
-	<h4>Quote: {{desc}}</h4>
-
-	{% for i in other_items %}
-		
+	{% for i in desc %}
 		<!-- <li>{{ i.name }}</li> -->
-		<li>{{ i.desc }}</li>
-		
+		<p>count: {{ forloop.counter }} </p>
+		<li><h4>Quote: {{i.desc}}</h4></li>
+		<!-- {{forloop.parentloop.counter}}
+ -->		
+
 	{% endfor %}
 	</ul>
 </body>

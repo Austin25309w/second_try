@@ -88,9 +88,10 @@ def removeItem(request, id):
 
 def show(request, id):
 	the_user = User.objects.get(id=id)
+	description = User.objects.get(id=id).liked_items.all().values('desc')
 	user = {
 		"name" : the_user.name,
-		"desc" : the_user.liked_items.all().name
+		"desc" : description
 	}
 	return render(request, "show.html", user)
 
